@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Support - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#">Health Support</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#blog-section">Blog</a></li>
+            <li><a href="#register-contact-section">Contact</a></li>
+        </ul>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Health Support</h1>
+            <p>Your mental health is our priority. Choose a method to start your journey.</p>
+            <div class="method-selection">
+                <button onclick="selectMethod('Text')">Text Support</button>
+                <button onclick="selectMethod('Call')">Call Support</button>
+            </div>
+            <p id="method-info"></p>
+        </div>
+    </section>
+ <!-- Chatbot Section -->
+ <div class="chatbot-container" id="chatbot-container">
+    <div class="chatbot-header">
+      <button id="close-chat" title="Close">X</button>
+      <button id="minimize-chat" title="Minimize">-</button>
+      <h3>Chat with Us</h3>
+    </div>
+    <div class="chatbot-body" id="chatbot-body">
+      <!-- Initial Message -->
+      <div class="bot-message">I'm here to assist you 😀 do you have any questions? 💬</div>
+    </div>
+    <div class="chatbot-footer">
+      <input type="text" id="user-message" placeholder="Ask a question..." />
+      <button id="send-message">Send</button>
+    </div>
+  </div>
+
+  <!-- About Section -->
+<section id="about" class="about">
+    <div class="about-content">
+        <h2>Who We Are</h2>
+        <p>At Health Support, we specialize in offering compassionate mental health support to those in need. Our dedicated team of professionals provides a variety of services, from online counseling to phone support, all tailored to your specific needs.</p>
+        <p>Whether you are struggling with anxiety, depression, stress, or any other mental health concern. Our approach is holistic, integrating both therapeutic techniques and wellness strategies to empower individuals to live healthier, happier lives.</p>
+    </div>
+    <div class="about-team">
+        <h3>Our Mission</h3>
+        <p>Our mission is to provide accessible, professional mental health support through various online platforms. We are committed to making mental health care as accessible as possible, so no one has to face their struggles alone.</p>
+    </div>
+</section>
+
+  <!-- FAQ Section -->
+<section id="faq" class="faq">
+    <div class="faq-header">
+        <h2>Frequently Asked Questions</h2>
+        <p>Find answers to common questions about our services.</p>
+    </div>
+    <div class="faq-content">
+        <div class="faq-item">
+            <h3 class="question">How do I book a session? <span class="toggle">+</span></h3>
+            <p class="answer">To book a session, simply click on the "Book a Session" button and select a convenient date and time.</p>
+        </div>
+        <div class="faq-item">
+            <h3 class="question">Are the sessions confidential? <span class="toggle">+</span></h3>
+            <p class="answer">Yes, all sessions are 100% confidential and adhere to strict privacy policies.</p>
+        </div>
+        <div class="faq-item">
+            <h3 class="question">What is the cost of a session? <span class="toggle">+</span></h3>
+            <p class="answer">The cost of a session depends on the type of service you choose. Please check our Services page for more details.</p>
+        </div>
+        <div class="faq-item">
+            <h3 class="question">Can I cancel or reschedule a session? <span class="toggle">+</span></h3>
+            <p class="answer">Yes, you can cancel or reschedule your session up to 24 hours before the appointment.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section id="services">
+    <h2 class="section-title">Our Services</h2>
+    <div class="services-container">
+        <div class="service-box left">
+            <h3>AI Chatbot for Mental Health</h3>
+            <p>Our AI-powered chatbot provides real-time mental health support tailored to your needs.</p>
+        </div>
+        <div class="service-box right">
+            <h3>24/7 Customer Support</h3>
+            <p>We offer round-the-clock support to ensure you get help whenever you need it.</p>
+        </div>
+        <div class="service-box left">
+            <h3>Personalized Wellness Plans</h3>
+            <p>Receive personalized wellness plans designed by experts to improve your mental well-being.</p>
+        </div>
+        <div class="service-box right">
+            <h3>Data Privacy & Security</h3>
+            <p>Your privacy is our priority. We ensure all your data is encrypted and secure.</p>
+        </div>
+    </div>
+</section>
+<!-- Team Section -->
+<section id="team" class="team">
+    <div class="team-header">
+        <h2>Meet Our Team</h2>
+        <p>Our team of professionals is here to support you through every step of your journey. Whether you need guidance via call or text, we're here to help.</p>
+    </div>
+
+    <div class="team-categories">
+        <!-- Call Support -->
+        <div class="team-category">
+            <h3>Call Support Team</h3>
+            <div class="team-members">
+                <!-- Psychologist 1 -->
+                <div class="team-member">
+                    <img src="jane.png" alt="Psychologist 1">
+                    <h4>Dr. Jane Doe</h4>
+                    <p>With over 10 years of experience, Dr. Jane specializes in anxiety and stress management. Her empathetic approach makes her an ideal choice for those seeking comforting and confidential conversations.</p>
+                    <button class="choose-button" onclick="openBookingForm('Dr. Jane Doe')">Book a Session</button> <!-- Button to open booking -->
+                </div>
+                <!-- Psychologist 2 -->
+                <div class="team-member">
+                    <img src="john.jpg" alt="Psychologist 2">
+                    <h4>Dr. John Smith</h4>
+                    <p>Dr. John is known for his expertise in dealing with depression and grief. He offers a non-judgmental space for individuals to express themselves and navigate difficult times.</p>
+                    <button class="choose-button" onclick="openBookingForm('Dr. John Smith')">Book a Session</button> <!-- Button to open booking -->
+                </div>
+                <!-- Psychologist 3 -->
+                <div class="team-member">
+                    <img src="emily.png" alt="Psychologist 3">
+                    <h4>Dr. Emily White</h4>
+                    <p>Dr. Emily specializes in trauma recovery and building emotional resilience. Her approach focuses on empowering individuals to regain control and move forward in their healing journey.</p>
+                    <button class="choose-button" onclick="openBookingForm('Dr. Emily White')">Book a Session</button> <!-- Button to open booking -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Text Support -->
+        <div class="team-category">
+            <h3>Text Support Team</h3>
+            <div class="team-members">
+                <!-- Psychologist 4 -->
+                <div class="team-member">
+                    <img src="sarah2.jpg" alt="Psychologist 4">
+                    <h4>Dr. Sarah Green</h4>
+                    <p>Dr. Sarah's expertise lies in helping individuals through text-based therapy. She is a compassionate listener who provides practical advice for managing daily stressors and mental health challenges.</p>
+                    <button class="choose-button" onclick="openBookingForm('Dr. Sarah Green')">Book a Session</button> <!-- Button to open booking -->
+                </div>
+                <!-- Psychologist 5 -->
+                <div class="team-member">
+                    <img src="michael.jpg" alt="Psychologist 5">
+                    <h4>Dr. Michael Brown</h4>
+                    <p>Dr. Michael specializes in cognitive-behavioral therapy (CBT) through text. He helps clients to change negative thought patterns and develop healthier coping strategies.</p>
+                    <button class="choose-button" onclick="openBookingForm('Dr. Michael Brown')">Book a Session</button> <!-- Button to open booking -->
+                </div>
+                <!-- Psychologist 6 -->
+                <div class="team-member">
+                    <img src="rachel.png" alt="Psychologist 6">
+                    <h4>Dr. Rachel Black</h4>
+                    <p>Dr. Rachel works with individuals facing a range of issues including relationships, self-esteem, and emotional wellness. She uses text therapy to provide ongoing support and encouragement.</p>
+                    <button class="choose-button" onclick="openBookingForm('Dr. Rachel Black')">Book a Session</button> <!-- Button to open booking -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Booking Form Section -->
+<section id="booking" class="booking" style="display:none;">
+    <h2>Book a Session with <span id="psychologist-name"></span></h2>
+    <p>Select your preferred method, date, and time for your session.</p>
+    
+    <!-- Method Selection -->
+    <div class="method-selection">
+        <label for="method">Choose your method:</label>
+        <select id="method">
+            <option value="call">Call</option>
+            <option value="text">Text</option>
+        </select>
+    </div>
+
+    <!-- Date and Time Selection -->
+    <div class="datetime-selection">
+        <label for="date">Select Date:</label>
+        <input type="date" id="date" required>
+        
+        <label for="time">Select Time:</label>
+        <input type="time" id="time" required>
+    </div>
+    
+    <!-- Submit Button -->
+    <button class="submit-button" onclick="submitBooking()">Submit Booking</button>
+</section>
+
+
+<div id="blog-section">
+    <h2>Latest Articles</h2>
+    
+    <div class="blog-post">
+        <img src="stress.jpg" alt="Article 1" class="blog-image">
+        <div class="post-info">
+            <h3 class="post-title">How to Manage Stress for a Healthier Life</h3>
+            <p class="post-summary">A guide on how to manage stress and improve mental health...</p>
+            <button class="read-more">
+                <a href="https://www.heart.org/en/healthy-living/healthy-lifestyle/stress-management" target="_blank" style="color: inherit; text-decoration: none;">Read More</a>
+            </button>
+        </div>
+    </div>
+
+    <div class="blog-post">
+        <img src="healthy.jpg" alt="Article 2" class="blog-image">
+        <div class="post-info">
+            <h3 class="post-title">Why Healthy Eating is Key to a Better Life</h3>
+            <p class="post-summary">An explanation of how healthy eating can help improve your overall well-being...</p>
+            <button class="read-more">
+                <a href="https://www.istockphoto.com/photo/healthy-lifestyle-good-life-organic-food-vegetables-close-up-portrait-of-happy-cute-gm1151268627-311959742?searchscope=image%2Cfilm" target="_blank" style="color: inherit; text-decoration: none;">Read More</a>            <div id="post-content-2" class="post-content" style="display: none;">
+            </div>
+        </div>
+    </div>
+    <!-- Blog Post 3 -->
+    <div class="blog-post">
+        <img src="mindfulnes.png" alt="Article 3" class="blog-image">
+        <div class="post-info">
+            <h3 class="post-title">The Power of Mindfulness in Daily Life</h3>
+            <p class="post-summary">Learn how mindfulness can improve focus and reduce anxiety...</p>
+            <button class="read-more">
+                <a href="https://www.timesprime.com/blog/the-power-of-mindfulness-the-synergy-of-meditation-and-exercise-for-a-healthier-you-103257003" target="_blank" style="color: inherit; text-decoration: none;">Read More</a>
+            </button>
+        </div>
+    </div>
+
+    <!-- Blog Post 4 -->
+    <div class="blog-post">
+        <img src="gym.jpg" alt="Article 4" class="blog-image">
+        <div class="post-info">
+            <h3 class="post-title">The Importance of Regular Physical Exercise</h3>
+            <p class="post-summary">Discover how staying active can improve your mental and physical health...</p>
+            <button class="read-more">
+                <a href="https://mydoctor.kaiserpermanente.org/mas/news/regular-exercise-benefits-both-mind-and-body-a-psychiatrist-explains-1903986" target="_blank" style="color: inherit; text-decoration: none;">Read More</a>
+            </button>
+        </div>
+    </div>
+</div>
+
+<section id="register-contact-section">
+    <div class="register-container">
+        <h2>Register Now</h2>
+        <form id="register-form">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit">Register</button>
+            <p id="register-message"></p>
+        </form>
+    </div>
+
+    <div class="contact-info">
+        <h2>Contact Information</h2>
+        <ul>
+            <li><strong>Email:</strong> support@yourwebsite.com</li>
+            <li><strong>Phone:</strong> +1 234 567 890</li>
+            <li><strong>Address:</strong> 123 Main Street, City, Country</li>
+            <li><strong>Working Hours:</strong> Mon - Fri: 9 AM - 6 PM</li>
+        </ul>
+    </div>
+</section>
+<footer>
+    <div class="footer-container">
+        <div class="footer-section about">
+            <h2>About Us</h2>
+            <p>We are committed to helping you achieve a balanced life through health, mindfulness, and well-being.</p>
+        </div>
+
+        <div class="footer-section links">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Register</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section social">
+            <h3>Follow Us</h3>
+            <ul>
+                <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 YourWebsite. All Rights Reserved.</p>
+    </div>
+</footer>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
+
