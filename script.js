@@ -3,33 +3,28 @@ function selectMethod(method) {
     document.getElementById('team').scrollIntoView({ behavior: 'smooth' });
 }
 
-// Funksioni për hapjen dhe mbylljen e menu-t në pajisjet mobile
 function toggleMenu() {
     const navLinks = document.querySelector('.nav-links');
     navLinks.classList.toggle('show');
 }
 
-// Përdorim setTimeout për të shtyrë shfaqjen e chatbot-it pas 2 sekondash
 window.onload = function() {
     setTimeout(function() {
       const chatbotContainer = document.getElementById('chatbot-container');
       chatbotContainer.classList.remove('hidden'); // Heqim klasën 'hidden' që e fsheh chatbot-in
-    }, 2000); // 2000 milisekonda (2 sekonda)
+    }, 2000); 
 };
 
-// Mbyll chatbot
 document.getElementById('close-chat').addEventListener('click', function() {
     const chatbotContainer = document.getElementById('chatbot-container');
     chatbotContainer.classList.add('hidden'); // Fsheh chatbot-in kur klikohet 'X'
 });
 
-// Minimizo chatbot
 document.getElementById('minimize-chat').addEventListener('click', function() {
     const chatbotBody = document.getElementById('chatbot-body');
     const chatbotFooter = document.getElementById('chatbot-footer');
     const chatbotHeader = document.getElementById('chatbot-header');
 
-    // Ndërron mes minimizimit dhe shfaqjes normale të chatbot-it
     if (chatbotBody.style.display === 'none') {
         chatbotBody.style.display = 'block';
         chatbotFooter.style.display = 'flex';
@@ -85,7 +80,6 @@ function getBotResponse(message) {
     return responses[message] || "I'm sorry, I don't have an answer for that right now.";
 }
 
-// Create suggested questions
 function createSuggestedQuestions() {
     const chatbotBody = document.getElementById('chatbot-body');
     const questionsContainer = document.createElement('div');
@@ -111,7 +105,6 @@ function createSuggestedQuestions() {
     chatbotBody.appendChild(questionsContainer);
 }
 
-// Call function to add suggested questions when chatbot loads
 createSuggestedQuestions();
 
 
@@ -140,7 +133,7 @@ function animateServicesOnScroll() {
         const boxTop = box.getBoundingClientRect().top;
 
         if (boxTop < triggerPoint) {
-            box.classList.add('show'); // Shfaq kutitë
+            box.classList.add('show'); 
         }
     });
 }
@@ -155,20 +148,16 @@ teamMembers.forEach(member => {
     member.addEventListener('mouseover', () => {
         const photo = member.querySelector('img');
         
-        // Shfaq foto me një efekte të lehtë lëvizjeje
         photo.style.transform = 'scale(1.1)';
         
-        // Animacioni i fotos
         photo.style.transition = 'transform 0.3s ease-in-out';
     });
 
     member.addEventListener('mouseout', () => {
         const photo = member.querySelector('img');
         
-        // Rikthe foton në formën e saj origjinale
         photo.style.transform = 'scale(1)';
         
-        // Rikthimi në animacionin origjinal
         photo.style.transition = 'transform 0.3s ease-in-out';
     });
 });
@@ -190,7 +179,6 @@ function submitBooking() {
         alert(
             `Your session with ${document.getElementById('psychologist-name').innerText} is booked for ${method} on ${date} at ${time}.\n\nYour booking will be successful after you complete the registration & payment.`
         );
-        // Logjika për ruajtjen e të dhënave të rezervimit mund të shtohet këtu
         document.getElementById('booking').style.display = 'none'; // Mbyll seksionin e rezervimit pas dërgimit
     } else {
         alert("Please select a date and time.");
@@ -210,7 +198,7 @@ function openBookingForm(psychologistName) {
 
 
 
-// Efekt kur kaloni me maus mbi artikujt për të nxjerrë një animacion të lehtë
+// Një animacion i lehtë
 const blogPosts = document.querySelectorAll('.blog-post');
 
 blogPosts.forEach(post => {
@@ -223,7 +211,6 @@ blogPosts.forEach(post => {
     });
 });
 
-// Register Form Validation
 document.getElementById('register-form').addEventListener('submit', function (e) {
     e.preventDefault();
     const name = document.getElementById('name').value.trim();
@@ -239,11 +226,10 @@ document.getElementById('register-form').addEventListener('submit', function (e)
     } else {
         document.getElementById('register-message').innerText = 'Registration successful!';
         document.getElementById('register-message').style.color = 'green';
-        this.reset(); // Reset form fields
+        this.reset();
     }
 });
 
-// Email Validation Function
 function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
