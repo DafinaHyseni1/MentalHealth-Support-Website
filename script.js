@@ -1,4 +1,3 @@
-// Funksioni për zgjedhjen e metodës (Text ose Call)
 function selectMethod(method) {
     document.getElementById('team').scrollIntoView({ behavior: 'smooth' });
 }
@@ -8,107 +7,132 @@ function toggleMenu() {
     navLinks.classList.toggle('show');
 }
 
-window.onload = function() {
-    setTimeout(function() {
-      const chatbotContainer = document.getElementById('chatbot-container');
-      chatbotContainer.classList.remove('hidden'); // Heqim klasën 'hidden' që e fsheh chatbot-in
-    }, 2000); 
+function goToTeam() {
+    document.getElementById("team").scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+const hamburger = document.getElementById("hamburger");
+const nav = document.getElementById("nav-menu");
+const navbar = document.querySelector(".navbar");
+
+hamburger.addEventListener("click", (e) => {
+    nav.classList.toggle("active");
+    e.stopPropagation();
+});
+
+document.addEventListener("click", (e) => {
+    const isClickInside = navbar.contains(e.target);
+
+    if (!isClickInside) {
+        nav.classList.remove("active");
+    }
+});
+
+const API_KEY = "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";
+
+window.onload = () => {
+    setTimeout(() => {
+        document.getElementById("chatbot-container").classList.remove("hidden");
+    }, 1000);
+};
+document.getElementById("close-chat").onclick = () => {
+    document.getElementById("chatbot-container").classList.add("hidden");
 };
 
-document.getElementById('close-chat').addEventListener('click', function() {
-    const chatbotContainer = document.getElementById('chatbot-container');
-    chatbotContainer.classList.add('hidden'); // Fsheh chatbot-in kur klikohet 'X'
+document.getElementById("minimize-chat").onclick = () => {
+    const container = document.getElementById("chatbot-container");
+    container.classList.toggle("minimized");
+};
+
+document.getElementById("send-message").onclick = sendMessage;
+
+document.getElementById("user-message").addEventListener("keypress", (e) => {
+    if (e.key === "Enter") sendMessage();
 });
 
-document.getElementById('minimize-chat').addEventListener('click', function() {
-    const chatbotBody = document.getElementById('chatbot-body');
-    const chatbotFooter = document.getElementById('chatbot-footer');
-    const chatbotHeader = document.getElementById('chatbot-header');
+async function sendMessage() {
+    const input = document.getElementById("user-message");
+    const text = input.value.trim();
+    if (!text) return;
 
-    if (chatbotBody.style.display === 'none') {
-        chatbotBody.style.display = 'block';
-        chatbotFooter.style.display = 'flex';
-        chatbotHeader.style.display = 'flex'; // Sigurohemi që header-i të jetë gjithmonë i dukshëm
-    } else {
-        chatbotBody.style.display = 'none';
-        chatbotFooter.style.display = 'none';
-        chatbotHeader.style.display = 'none'; // Fsheh header-in nëse është minimalizuar
+    addMessage(text, "user-message");
+    input.value = "";
+
+    const typing = addMessage("Typing...", "bot-message");
+
+    try {
+        const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${API_KEY}`
+            },
+            body: JSON.stringify({
+               model: "llama-3.1-8b-instant",
+                messages: [
+                    {
+                      role: "system",
+    content: `
+You are a compassionate, empathetic mental health support assistant.
+
+Your role:
+- Talk like a warm, understanding human
+- Be emotionally supportive and calm
+- Validate feelings (never judge)
+- Encourage healthy coping strategies (breathing, journaling, talking, rest)
+- Never act like a therapist or diagnose conditions
+- If user is in distress, respond gently and reassuringly
+- Use simple, soft language and sometimes emojis (🙂💛🌿)
+
+Important:
+- Always prioritize emotional safety
+- Be kind, patient, and comforting
+`
+                    },
+                    {
+                        role: "user",
+                        content: text
+                    }
+                ]
+            })
+        });
+
+        const data = await res.json();
+        typing.remove();
+
+console.log("GROQ RESPONSE:", data);
+
+const reply = data?.choices?.[0]?.message?.content || data?.error?.message;
+
+        if (reply) {
+            addMessage(reply, "bot-message");
+        } else {
+            addMessage("No response from AI.", "bot-message");
+            console.log(data);
+        }
+
+    } catch (err) {
+        typing.remove();
+        addMessage("Error connecting to AI.", "bot-message");
+        console.error(err);
     }
-});
-
-document.getElementById('send-message').addEventListener('click', function() {
-    const userMessage = document.getElementById('user-message').value;
-    sendMessage(userMessage);
-});
-
-function sendMessage(userMessage) {
-    const chatbotBody = document.getElementById('chatbot-body');
-
-    if (userMessage.trim() !== "") {
-        addMessageToChat(userMessage, 'user-message');
-
-        let botResponse = getBotResponse(userMessage);
-        addMessageToChat(botResponse, 'bot-message');
-
-        document.getElementById('user-message').value = '';
-
-        chatbotBody.scrollTop = chatbotBody.scrollHeight;
-    }
 }
 
-function addMessageToChat(message, className) {
-    const chatbotBody = document.getElementById('chatbot-body');
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add(className);
-    messageDiv.textContent = message;
-    chatbotBody.appendChild(messageDiv);
+function addMessage(text, className) {
+    const box = document.getElementById("chatbot-body");
+
+    const div = document.createElement("div");
+    div.className = className;
+    div.textContent = text;
+
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
+
+    return div;
 }
 
-function sendSuggestedQuestion(question) {
-    sendMessage(question);
-}
-
-function getBotResponse(message) {
-    const responses = {
-       "How can I manage stress?": "Managing stress involves mindfulness, exercise, and healthy habits. Try deep breathing techniques and regular physical activity.",
-        "What are the benefits of therapy?": "Therapy provides a safe space to discuss emotions and develop coping strategies for mental well-being.",
-        "How does healthy eating affect mental health?": "A balanced diet rich in nutrients can improve mood and reduce anxiety and depression symptoms.",
-        "What is mindfulness?": "Mindfulness is the practice of staying present in the moment, reducing stress, and increasing self-awareness.",
-        "Can exercise help with anxiety?": "Yes! Regular exercise releases endorphins, which improve mood and reduce symptoms of anxiety and stress."
-    };
-
-    return responses[message] || "I'm sorry, I don't have an answer for that right now.";
-}
-
-function createSuggestedQuestions() {
-    const chatbotBody = document.getElementById('chatbot-body');
-    const questionsContainer = document.createElement('div');
-    questionsContainer.classList.add('suggested-questions');
-
-    const questions = [
-       "How can I manage stress?",
-        "What are the benefits of therapy?",
-        "How does healthy eating affect mental health?",
-        "What is mindfulness?",
-    ];
-
-    questions.forEach(question => {
-        const questionButton = document.createElement('button');
-        questionButton.textContent = question;
-        questionButton.classList.add('suggested-question');
-        questionButton.onclick = function() {
-            sendSuggestedQuestion(question);
-        };
-        questionsContainer.appendChild(questionButton);
-    });
-
-    chatbotBody.appendChild(questionsContainer);
-}
-
-createSuggestedQuestions();
-
-
-// Marrim të gjitha pyetjet dhe i bëjmë që të hapen/mbyllen kur klikohen
 document.querySelectorAll('.faq-item .question').forEach((item) => {
     item.addEventListener('click', function () {
         const answer = this.nextElementSibling;
@@ -163,74 +187,102 @@ teamMembers.forEach(member => {
 });
 
 
-// Funksioni që hap formularin e rezervimit dhe vendos emrin e psikologut
-function openBookingForm(psychologistName) {
-    document.getElementById('psychologist-name').innerText = psychologistName;
-    document.getElementById('booking').style.display = 'block';  // Tregon seksionin e rezervimit
-}
 
-// Funksioni për të dërguar rezervimin
+let isRegistered = false;
+
+document.getElementById('register-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    const msg = document.getElementById('register-message');
+
+    if (!name || !email || !password) {
+        msg.innerText = 'Please fill out all fields.';
+        msg.style.color = 'red';
+        return;
+    }
+
+    if (!validateEmail(email)) {
+        msg.innerText = 'Please enter a valid email address.';
+        msg.style.color = 'red';
+        return;
+    }
+
+    isRegistered = true;
+
+    msg.innerText = 'Registration successful! You can now book your session.';
+    msg.style.color = 'green';
+
+    this.reset();
+});
+
+/* ================= BOOKING ================= */
 function submitBooking() {
     const method = document.getElementById('method').value;
     const date = document.getElementById('date').value;
     const time = document.getElementById('time').value;
 
-    if (date && time) {
+    if (!isRegistered) {
         alert(
-            `Your session with ${document.getElementById('psychologist-name').innerText} is booked for ${method} on ${date} at ${time}.\n\nYour booking will be successful after you complete the registration & payment.`
+            "Please complete registration first.\n\nThis helps us personalize your therapy experience."
         );
-        document.getElementById('booking').style.display = 'none'; // Mbyll seksionin e rezervimit pas dërgimit
-    } else {
-        alert("Please select a date and time.");
+        return;
     }
+
+    if (!date || !time) {
+        alert("Please select both date and time.");
+        return;
+    }
+
+    alert(
+        `💛 Thank you for your request!\n\n` +
+        `Therapist: ${document.getElementById('psychologist-name').innerText}\n` +
+        `Method: ${method}\n` +
+        `Date: ${date}\n` +
+        `Time: ${time}\n\n` +
+        `We will contact you shortly to confirm your appointment.`
+    );
+
+    closeBooking();
 }
 
+function openBookingForm(name, image) {
+    document.getElementById('psychologist-name').innerText = name;
+    document.getElementById('psychologist-img').src = image;
 
-// Funksioni për të hapur formularin e rezervimit
-function openBookingForm(psychologistName) {
-    // Aktivizimi i butonit Book a Session pasi të jetë klikuar
-    const button = document.querySelector('.choose-button');
-    button.classList.add('active'); // Shtohet klasa aktive për butonin
-
-    document.getElementById('psychologist-name').innerText = psychologistName;
-    document.getElementById('booking').style.display = 'block';  // Tregon seksionin e rezervimit
+    document.getElementById('bookingModal').style.display = 'flex';
 }
 
-
-
-// Një animacion i lehtë
-const blogPosts = document.querySelectorAll('.blog-post');
-
-blogPosts.forEach(post => {
-    post.addEventListener('mouseenter', () => {
-        post.style.transform = 'scale(1.05)';
-        post.style.transition = 'transform 0.3s ease-in-out';
-    });
-    post.addEventListener('mouseleave', () => {
-        post.style.transform = 'scale(1)';
-    });
-});
-
-document.getElementById('register-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value.trim();
-
-    if (!name || !email || !password) {
-        document.getElementById('register-message').innerText = 'Please fill out all fields.';
-        document.getElementById('register-message').style.color = 'red';
-    } else if (!validateEmail(email)) {
-        document.getElementById('register-message').innerText = 'Please enter a valid email address.';
-        document.getElementById('register-message').style.color = 'red';
-    } else {
-        document.getElementById('register-message').innerText = 'Registration successful!';
-        document.getElementById('register-message').style.color = 'green';
-        this.reset();
-    }
-});
+function closeBooking() {
+    document.getElementById('bookingModal').style.display = 'none';
+}
 
 function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
 }
+
+document.querySelectorAll('.book-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const name = btn.getAttribute('data-name');
+        const img = btn.getAttribute('data-img');
+
+        openBookingForm(name, img);
+    });
+});
+
+const blogPosts = document.querySelectorAll('.blog-post');
+
+blogPosts.forEach(post => {
+    post.addEventListener('mouseenter', () => {
+        post.style.transform = 'scale(1.05)';
+        post.style.transition = '0.3s ease';
+    });
+
+    post.addEventListener('mouseleave', () => {
+        post.style.transform = 'scale(1)';
+    });
+});
