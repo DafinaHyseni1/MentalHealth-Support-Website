@@ -107,6 +107,14 @@ body {
     }
 }
 
+@media (max-width:768px){
+
+    .hero{
+        background-attachment: scroll;
+    }
+
+}
+
 
 .hero {
     padding: 140px 6% 80px;
